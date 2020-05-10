@@ -1,11 +1,3 @@
-from statemachine import Transition
-from klasy import Generator
-from automaty.robot import *
-from automaty.ladownica import *
-from automaty.przybijanie import *
-from robo.robotFunction import *
-
-
 #setup automa
 from statemachine import StateMachine, State, Transition
 from slaves.arm_box import *
@@ -49,16 +41,6 @@ for indices in form_to:
        transition = Transition(master_states[from_idx], master_states[to_idx], identifier=op_identifier)
        master_transitions[op_identifier] = transition
        master_states[from_idx].transitions.append(transition)
- 
- 
- 
- 
- 
- 
- 
-
-
-
  
 #best opt
 path_1 = ["m_0_1", "m_1_3", "m_3_5", "m_5_6", "m_6_7", "m_7_0"]
