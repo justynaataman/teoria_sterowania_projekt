@@ -1,5 +1,22 @@
+from statemachine import Transition
+from klasy import Generator
+from automaty.robot import *
+from automaty.ladownica import *
+from automaty.przybijanie import *
+from robo.robotFunction import *
+
+
 #setup automa
 from statemachine import StateMachine, State, Transition
+from slaves.arm_box import *
+from slaves.camera import *
+from slaves.check_box_pose import *
+from slaves.grab_obj import *
+from slaves.move_arm import *
+from slaves.move_base import *
+from slaves.put_obj import *
+from class import Generator
+
 
 options = [
     {"name": "wait_for_xy", "initial": True, "value": "wait_for_xy"},  # 0
@@ -41,48 +58,7 @@ for indices in form_to:
  
 
 
-# create a generator class
-class Generator(StateMachine):
-   states = []
-   transitions = []
-   states_map = {}
-   current_state = None
- 
-   def __init__(self, states, transitions):
- 
-       # creating each new object needs clearing its variables (otherwise they're duplicated)
-       self.states = []
-       self.transitions = []
-       self.states_map = {}
-       self.current_state = states[0]
- 
-       # create fields of states and transitions using setattr()
-       # create lists of states and transitions
-       # create states map - needed by StateMachine to map states and its values
-       for s in states:
-           setattr(self, str(s.name).lower(), s)
-           self.states.append(s)
-           self.states_map[s.value] = str(s.name)
- 
-       for key in transitions:
-           setattr(self, str(transitions[key].identifier).lower(), transitions[key])
-           self.transitions.append(transitions[key])
- 
-       # super() - allows us to use methods of StateMachine in our Generator object
-       super(Generator, self).__init__()
- 
-   # define a printable introduction of a class
-   def __repr__(self):
-       return "{}(model={!r}, state_field={!r}, current_state={!r})".format(
-           type(self).__name__, self.model, self.state_field,
-           self.current_state.identifier,
-       )
- 
-   # method of creating objects in a flexible way (we can define multiple functions
-   # which will create objects in different ways)
-   @classmethod
-   def create_master(cls, states, transitions) -> 'Generator':
-       return cls(states, transitions)
+
  
 #best opt
 path_1 = ["m_0_1", "m_1_3", "m_3_5", "m_5_6", "m_6_7", "m_7_0"]
