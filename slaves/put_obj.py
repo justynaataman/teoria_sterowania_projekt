@@ -4,22 +4,22 @@ from statemachine import StateMachine, State, Transition
 options = [
     {"name": "start", "initial": True, "value": "start"},  # 0
     {"name": "open_gripper", "initial": False, "value": "open_gripper"},  # 1
+]
 
-
-master_states = [State(**opt) for opt in options]
+put_obj_states = [State(**opt) for opt in options]
  
 form_to = [
    [0, [1]],
 ]
  
-master_transition = {}
+put_obj_transitions = {}
 for indices in form_to:
    from_idx, to_idx_tuple = indices  
    for to_idx in to_idx_tuple:  
        op_identifier = "m_{}_{}".format(from_idx, to_idx)  # 
-       transition = Transition(master_states[from_idx], master_states[to_idx], identifier=op_identifier)
-       master_transitions[op_identifier] = transition
-       master_states[from_idx].transitions.append(transition)
+       transition = Transition(put_obj_states[from_idx], put_obj_states[to_idx], identifier=op_identifier)
+       put_obj_transitions[op_identifier] = transition
+       put_obj_states[from_idx].transitions.append(transition)
  
 
 class Generator(StateMachine):

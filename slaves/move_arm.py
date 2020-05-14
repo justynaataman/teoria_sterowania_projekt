@@ -6,24 +6,24 @@ options = [
     {"name": "inv_kin", "initial": False, "value": "inv_kin"},  # 1
     {"name": "move", "initial": False, "value": "move"},  # 2
     {"name": "stop", "initial": False, "value": "stop"},  # 3
-
+]
 
 master_states = [State(**opt) for opt in options]
  
 form_to = [
    [0, [1]],
-   [1, [1, 2]],
-   [2, [1, 3]],
+   [1, [2, 3]],
+   [2, [3]],
 ]
  
-master_transition = {}
+move_arm_transitions = {}
 for indices in form_to:
    from_idx, to_idx_tuple = indices  
    for to_idx in to_idx_tuple:  
        op_identifier = "m_{}_{}".format(from_idx, to_idx)  # 
-       transition = Transition(master_states[from_idx], master_states[to_idx], identifier=op_identifier)
-       master_transitions[op_identifier] = transition
-       master_states[from_idx].transitions.append(transition)
+       transition = Transition(move_arm_states[from_idx], move_arm_states[to_idx], identifier=op_identifier)
+       move_arm_transitions[op_identifier] = transition
+       move_arm_states[from_idx].transitions.append(transition)
  
 
 class Generator(StateMachine):

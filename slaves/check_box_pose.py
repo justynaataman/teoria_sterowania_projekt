@@ -6,9 +6,9 @@ options = [
     {"name": "get_base_pose", "initial": False, "value": "get_base_pose"},  # 1
     {"name": "return_false", "initial": False, "value": "return_false"},  # 2
     {"name": "return_true", "initial": False, "value": "return_true"},  # 3
+]
 
-
-master_states = [State(**opt) for opt in options]
+check_box_pose_states = [State(**opt) for opt in options]
  
 form_to = [
    [0, [1]],
@@ -16,14 +16,14 @@ form_to = [
    [2, [1, 3]],
 ]
  
-master_transition = {}
+check_box_pose_transitions = {}
 for indices in form_to:
    from_idx, to_idx_tuple = indices  
    for to_idx in to_idx_tuple:  
        op_identifier = "m_{}_{}".format(from_idx, to_idx)  # 
-       transition = Transition(master_states[from_idx], master_states[to_idx], identifier=op_identifier)
-       master_transitions[op_identifier] = transition
-       master_states[from_idx].transitions.append(transition)
+       transition = Transition(check_box_pose_states[from_idx],check_box_pose_states[to_idx], identifier=op_identifier)
+       check_box_pose_transitions[op_identifier] = transition
+       check_box_pose_states[from_idx].transitions.append(transition)
  
 
 class Generator(StateMachine):
