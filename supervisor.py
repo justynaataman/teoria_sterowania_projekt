@@ -8,7 +8,7 @@ from slaves.move_arm import *
 from slaves.move_base import *
 from slaves.put_obj import *
 from slaves.visor import *
-from Generator import generator
+import Generator
 
 
 
