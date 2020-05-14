@@ -7,6 +7,7 @@ from slaves.grab_obj import *
 from slaves.move_arm import *
 from slaves.move_base import *
 from slaves.put_obj import *
+from slaves.visor import *
 from Generator import generator
 
 
@@ -15,7 +16,7 @@ from Generator import generator
 for path in paths:
  
    # create a supervisor
-   supervisor = Generator.create_master(master_states, master_transitions)
+   supervisor = Generator.create_master(master_states, master_transition)
    print('\n' + str(supervisor))
  
    # run supervisor for exemplary path
@@ -23,33 +24,34 @@ for path in paths:
    for event in path:
  
        # launch a transition in our supervisor
-       master_transitions[event]._run(supervisor)
+       master_transition[event]._run(supervisor)
        print(supervisor.current_state)
  
        # add slave
        if supervisor.current_state.value == "camera":
+           print("cam")
           
        if supervisor.current_state.value == "move_base":
            # TODO: automata 2 (for) slave2
-           ...
+           print("move base")
  
        if supervisor.current_state.value == "grab_obj":
            # TODO: automata 3 (for) slave3
-           ...
+           print("grab obj")
  
        if supervisor.current_state.value == "move_arm":
            # TODO: automata 3 (for) slave3
-           …
-     if supervisor.current_state.value == "check_box_pos”:
+           print("move arm")
+       if supervisor.current_state.value == 'check_box_pos':
            # TODO: automata 3 (for) slave3
-           ...
-     if supervisor.current_state.value == "arm_box":
+           print("check box pos")
+       if supervisor.current_state.value == "arm_box":
            # TODO: automata 3 (for) slave3
-           ...
-     if supervisor.current_state.value == "put_obj":
+           print("arm box")
+       if supervisor.current_state.value == "put_obj":
            # TODO: automata 3 (for) slave3
-           ...
+           print("put obj")
  
-           print("Supervisor done!")
+print('Supervisor done!')
 
 

@@ -8,7 +8,7 @@ options = [
     {"name": "stop", "initial": False, "value": "stop"},  # 3
 ]
 
-master_states = [State(**opt) for opt in options]
+move_arm_states = [State(**opt) for opt in options]
  
 form_to = [
    [0, [1]],

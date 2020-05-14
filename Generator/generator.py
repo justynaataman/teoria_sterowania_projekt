@@ -1,3 +1,5 @@
+from statemachine import StateMachine, State, Transition
+
 # create a generator class
 class Generator(StateMachine):
    states = []
