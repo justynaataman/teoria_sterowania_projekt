@@ -22,35 +22,38 @@ for path in paths:
    # run supervisor for exemplary path
    print("Executing path: {}".format(path))
    for event in path:
- 
        # launch a transition in our supervisor
        master_transition[event]._run(supervisor)
+       events = ['camera', 'move_base', 'grab_obj', 'move_arm', 'check_box_pos', 'arm_box', 'put_obj']
        print(supervisor.current_state)
- 
-       # add slave
-       if supervisor.current_state.value == "camera":
-           print("cam")
-          
-       if supervisor.current_state.value == "move_base":
-           # TODO: automata 2 (for) slave2
+       val = supervisor.current_state.value
+       #for ev in events:
+
+           # add slave
+       if val == "camera":
+          print("cam")
+
+       if val == "move_base":
+           #TODO: automata 2 (for) slave2
            print("move base")
- 
-       if supervisor.current_state.value == "grab_obj":
-           # TODO: automata 3 (for) slave3
+
+       if val == "grab_obj":
+               # TODO: automata 3 (for) slave3
            print("grab obj")
- 
-       if supervisor.current_state.value == "move_arm":
-           # TODO: automata 3 (for) slave3
-           print("move arm")
-       if supervisor.current_state.value == 'check_box_pos':
-           # TODO: automata 3 (for) slave3
-           print("check box pos")
-       if supervisor.current_state.value == "arm_box":
-           # TODO: automata 3 (for) slave3
-           print("arm box")
-       if supervisor.current_state.value == "put_obj":
-           # TODO: automata 3 (for) slave3
-           print("put obj")
+
+       if val == "move_arm":
+               # TODO: automata 3 (for) slave3
+            print("move arm")
+       if val == 'check_box_pos':
+               # TODO: automata 3 (for) slave3
+            print("check box pos")
+       if val == "arm_box":
+               # TODO: automata 3 (for) slave3
+            print("arm box")
+       if val == "put_obj":
+               # TODO: automata 3 (for) slave3
+            print("put obj")
+
  
 print('Supervisor done!')
 
