@@ -20,6 +20,14 @@ check_box_pos = "check box pos"
 arm_b = "is arm over box"
 put_o = "put obj"
 
+def path(stan1, stan2):
+    for path in nx.all_simple_paths(visor, source=stan1, target=stan2):
+        print(path)
+
+
+
+
+
 visor.add_edges_from([('wait', 'cam'), ('cam', 'grab'), ('grab', 'check_box_pos'),
                       ('check_box_pos', 'arm_b'), ('check_box_pos', 'move_b'),
      ('cam', 'move_a'), ('move_b', 'cam'), ('move_b', 'arm_b'), ('arm_b', 'put_o'),
@@ -37,4 +45,6 @@ nx.draw_networkx_nodes(visor, pos, cmap=plt.get_cmap('jet'),
 nx.draw_networkx_labels(visor, pos)
 nx.draw_networkx_edges(visor, pos, edge_color='r', arrows=True)
 nx.draw_networkx_edges(visor, pos,  arrows=False)
+
+path('wait', 'move_a')
 plt.show()

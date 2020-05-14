@@ -8,10 +8,7 @@ from slaves.move_arm import *
 from slaves.move_base import *
 from slaves.put_obj import *
 from slaves.visor import *
-import Generator as generator
-
-
-def path(stan1, stan2):
+from Generator.generator import Generator
 
 
  
