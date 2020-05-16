@@ -9,15 +9,33 @@ from slaves.move_base import *
 from slaves.put_obj import *
 from slaves.visor import *
 from Generator.generator import Generator
+import argparse
+import robopy.base.model as robot
+import sys
+from robopy import rpy2r
+from robopy.base import pose
+from moves import move_lin
+
+from move import animate_robot
 
 
- 
+
+
+path_a = []
+model = robot.Puma560()
+
+rot1 = rpy2r([0, 0, 0], unit='deg')
+tran1 = [0, 0, 0]
+start = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
+
+
+
 for path in paths:
- 
+    
    # create a supervisor
    supervisor = Generator.create_master(master_states, master_transition)
    print('\n' + str(supervisor))
- 
+   i = 0
    # run supervisor for exemplary path
    print("Executing path: {}".format(path))
    for event in path:
@@ -42,18 +60,22 @@ for path in paths:
            slave_transition = move_base_transitions
            slave_path = paths_move_base
            print("move base")
+           start = animate_robot(model, start, path_a, i)
+
        if val == "grab_obj":
                # TODO: automata 3 (for) slave3
            print("grab obj")
            slave_states = grab_obj_states
            slave_path = paths_grab_obj
            slave_transition = grab_obj_transitions
+      
        if val == "move_arm":
             # TODO: automata 3 (for) slave3
             slave_transition = move_arm_transitions
             slave_states = move_arm_states
             slave_path = paths_move_arm
             print("move arm")
+            start = animate_robot(model, start, path_a, i)
        if val == 'check_box_pos':
                # TODO: automata 3 (for) slave3
             slave_transition = check_box_pose_transitions
@@ -72,6 +94,8 @@ for path in paths:
             slave_states = put_obj_states
             slave_path = paths_put_obj
             print('put obj')
+            start = animate_robot(model, start, path_a, i)
+         
        #create slave automata
        print('automata')
        if slave_states is not None:
@@ -82,10 +106,8 @@ for path in paths:
                slave_transition[x]._run(slave)
                print(slave.current_state)
 
+model.animate(stances=path_a, frame_rate=30, unit='deg')
 
-
-
- 
 print('Supervisor done!')
 
 
