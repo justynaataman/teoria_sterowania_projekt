@@ -1,5 +1,6 @@
 #setup automa
 from statemachine import StateMachine, State, Transition
+from .funct import create_tr
 
 options = [
     {"name": "start", "initial": True, "value": "start"},  # 0
@@ -13,6 +14,8 @@ form_to = [
 ]
  
 put_obj_transitions = {}
+put_obj_transitions, put_obj_states = create_tr(put_obj_transitions, put_obj_states, form_to)
+"""
 for indices in form_to:
    from_idx, to_idx_tuple = indices  
    for to_idx in to_idx_tuple:  
@@ -20,7 +23,7 @@ for indices in form_to:
        transition = Transition(put_obj_states[from_idx], put_obj_states[to_idx], identifier=op_identifier)
        put_obj_transitions[op_identifier] = transition
        put_obj_states[from_idx].transitions.append(transition)
- 
+"""
 
 
  

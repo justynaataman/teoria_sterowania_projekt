@@ -1,4 +1,5 @@
 from statemachine import StateMachine, State, Transition
+from .funct import create_tr
 
 options = [
     {"name": "start", "initial": True, "value": "start"},  # 0
@@ -17,6 +18,8 @@ form_to = [
 ]
 # create transitions for a master (as a dict)
 camera_transitions = {}
+camera_transitions, camera_states = create_tr(camera_transitions, camera_states, form_to)
+"""
 for indices in form_to:
     from_idx, to_idx_tuple = indices  # unpack list of two elements into separate from_idx and to_idx_tuple
     for to_idx in to_idx_tuple:  # iterate over destinations from a source state
@@ -28,7 +31,7 @@ for indices in form_to:
 
         # add transition to source state
         camera_states[from_idx].transitions.append(transition)
-
+"""
 #pachy
 recon_obj = ["m_0_1", "m_1_2", "m_2_4"]
 not_recon_obj = ["m_0_1", "m_1_2", "m_2_3"]

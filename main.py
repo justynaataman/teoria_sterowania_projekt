@@ -1,19 +1,13 @@
 #setup automa
 from statemachine import StateMachine, State, Transition
-from slaves.arm_box import *
-from slaves.camera import *
-from slaves.check_box_pose import *
-from slaves.grab_obj import *
-from slaves.move_arm import *
-from slaves.move_base import *
-from slaves.put_obj import *
-from slaves.visor import *
+from slaves import *
 from Generator.generator import Generator
 import argparse
 import robopy.base.model as robot
 import sys
 from robopy import rpy2r
 from robopy.base import pose
+import time
 from moves import move_lin
 
 from move import animate_robot
@@ -29,20 +23,23 @@ tran1 = [0, 0, 0]
 start = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
 
 
-
+des_id = 0
 for path in paths:
     
    # create a supervisor
    supervisor = Generator.create_master(master_states, master_transition)
-   #print('\n' + str(supervisor))
+   print(des_path[des_id])
+   time.sleep(3.0)
+   des_id = des_id + 1
+   print('\n' + str(supervisor))
    i = 0
    # run supervisor for exemplary path
-   #print("Executing path: {}".format(path))
+   print("Executing path: {}".format(path))
    for event in path:
        # launch a transition in our supervisor
        master_transition[event]._run(supervisor)
        events = ['camera', 'move_base', 'grab_obj', 'move_arm', 'check_box_pos', 'arm_box', 'put_obj']
-       #print(supervisor.current_state)
+       print(supervisor.current_state)
        val = supervisor.current_state.value
        slave_states = None
        slave_transition = None
@@ -50,7 +47,7 @@ for path in paths:
        #for ev in events:
            # add slave
        if val == "camera":
-           #print("cam")
+           print("cam")
            slave_states = camera_states
            slave_transition = camera_transitions
            slave_path = paths_camera
@@ -59,13 +56,13 @@ for path in paths:
            slave_states = move_base_states
            slave_transition = move_base_transitions
            slave_path = paths_move_base
-           #print("move base")
+           print("move base")
            start, path_a, i = animate_robot(model, start, path_a, i)
            print(path_a)
 
        if val == "grab_obj":
                # TODO: automata 3 (for) slave3
-           #print("grab obj")
+           print("grab obj")
            slave_states = grab_obj_states
            slave_path = paths_grab_obj
            slave_transition = grab_obj_transitions
@@ -75,40 +72,41 @@ for path in paths:
             slave_transition = move_arm_transitions
             slave_states = move_arm_states
             slave_path = paths_move_arm
-            #print("move arm")
+            print("move arm")
             start, path_a, i = animate_robot(model, start, path_a, i)
        if val == 'check_box_pos':
                # TODO: automata 3 (for) slave3
             slave_transition = check_box_pose_transitions
             slave_states = check_box_pose_states
             slave_path = paths_check_box_pos
-            #print("check box pos")
+            print("check box pos")
        if val == "arm_box":
                # TODO: automata 3 (for) slave3
             slave_transition = arm_box_transitions
             slave_states = arm_box_states
             slave_path = paths_arm_box
-            #print("arm box")
+            print("arm box")
        if val == "put_obj":
             # TODO: automata 3 (for) slave3
             slave_transition = put_obj_transitions
             slave_states = put_obj_states
             slave_path = paths_put_obj
-            #print('put obj')
+            print('put obj')
             start, path_a, i = animate_robot(model, start, path_a, i)
-            print(path_a)
          
        #create slave automata
-       #print('automata')
        if slave_states is not None:
            slave = Generator.create_master(slave_states, slave_transition)
            #for now first path
            ss = slave_path[0]
            for x in ss:
                slave_transition[x]._run(slave)
-               #print(slave.current_state)
+               print(slave.current_state)
+               time.sleep(1.0)
+       time.sleep(2.0)
+       print("")
 
-model.animate(stances=path_a, frame_rate=30, unit='deg')
+   model.animate(stances=path_a, frame_rate=30, unit='deg')
 
 print('Supervisor done!')
 

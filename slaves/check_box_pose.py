@@ -1,5 +1,5 @@
-#setup automa
 from statemachine import StateMachine, State, Transition
+from .funct import create_tr
 
 options = [
     {"name": "start", "initial": True, "value": "start"},  # 0
@@ -17,6 +17,8 @@ form_to = [
 ]
  
 check_box_pose_transitions = {}
+check_box_pose_transitions, check_box_pose_states = create_tr(check_box_pose_transitions, check_box_pose_states, form_to)
+"""
 for indices in form_to:
    from_idx, to_idx_tuple = indices  
    for to_idx in to_idx_tuple:  
@@ -25,7 +27,7 @@ for indices in form_to:
        check_box_pose_transitions[op_identifier] = transition
        check_box_pose_states[from_idx].transitions.append(transition)
  
-
+"""
 
  
 #best opt
