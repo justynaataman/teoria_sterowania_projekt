@@ -5,7 +5,7 @@ options = [
     {"name": "start", "initial": True, "value": "start"},  # 0
     {"name": "close_gripper", "initial": False, "value": "close_gripper"},  # 1
     {"name": "end", "initial": False, "value": "end"},  # 2
-    {"name": "end_failure", "initial": False, "value": "end_failure"},  # 3
+ 
 ]
 
 grab_obj_states = [State(**opt) for opt in options]
@@ -13,7 +13,6 @@ grab_obj_states = [State(**opt) for opt in options]
 form_to = [
    [0, [1]],
    [1, [2]],
-   [1, [3]],
 ]
 
 # create transitions for a master (as a dict)
@@ -33,8 +32,7 @@ for indices in form_to:
         grab_obj_states[from_idx].transitions.append(transition)
 """
 
-#pachy
 grab = ["m_0_1", "m_1_2"]
-grab_failure = ["m_0_1", "m_1_3"]
 
-paths_grab_obj = [grab, grab_failure]
+
+paths_grab_obj = [grab]
