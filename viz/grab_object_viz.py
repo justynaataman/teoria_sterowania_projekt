@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 grab_obj = nx.DiGraph()
 
 
-grab_obj.add_edges_from([('start', 'close_gripper'), ('close_gripper', 'end'), ('close_gripper', 'end_with_failure')])
+grab_obj.add_edges_from([('start', 'close_gripper'), ('close_gripper', 'end')])
 
 val_map = {'start': 0.4,
-           'end': 0.6, 
-	   'end_with_failure': 0.6}
+           'end': 0.6}
 
 values = [val_map.get(node, 0.25) for node in grab_obj.nodes()]
 
