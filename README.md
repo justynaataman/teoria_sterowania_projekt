@@ -8,13 +8,13 @@ Schemat automatu nadrzędnego          | Automat arm_box
 :-------------------------:|:-------------------------:
 ![](docs/schemat.png)  |  ![](docs/arm_box)
 s3          |  s4
-
+:-------------------------:|:-------------------------:
 ![](docs/camera2)  |  ![](docs/check_base_pose)
 s5         |  s6
-
+:-------------------------:|:-------------------------:
 ![](docs/grab_obj)  |  ![](docs/move_arm)
 s5         |  s6
-
+:-------------------------:|:-------------------------:
 ![](docs/move_base)  |  ![](docs/open_gripper)
 
 
