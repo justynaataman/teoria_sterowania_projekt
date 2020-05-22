@@ -6,7 +6,7 @@ Celem robota jest poruszanie się po hali, zbieranie przedmiotów i później od
 
 s1          |  s2
 :-------------------------:|:-------------------------:
-![](docs/camera2.png)  |  ![](docs/camera2.png)
+![](docs/camera2)  |  ![](docs/camera2.png)
 s3          |  s4
 :-------------------------:|:-------------------------:
 ![](docs/camera2.png)  |  ![](docs/camera2.png)
