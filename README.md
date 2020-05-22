@@ -5,6 +5,7 @@ Celem robota jest poruszanie się po hali, zbieranie przedmiotów i później od
 
 
 Schemat automatu nadrzędnego          | Automat "is arm over box"
+:-------------------------:|:-------------------------:
 ![](docs/schemat.png)  |  ![](docs/arm_box)
 Automat "camera"          | Automat "checking box pos"
 ![](docs/camera2)  |  ![](docs/check_base_pose)
