@@ -5,10 +5,8 @@ Celem robota jest poruszanie się po hali, zbieranie przedmiotów i później od
 <p align="center"><img src="schemat.png" height = "500" width = "400"></p>
 
 Schemat automatu nadrzędnego          | Automat arm_box
-:-------------------------:|:-------------------------:
 ![](docs/schemat.png)  |  ![](docs/arm_box)
 s3          |  s4
-:-------------------------:|:-------------------------:
 ![](docs/camera2)  |  ![](docs/check_base_pose)
 s5         |  s6
 :-------------------------:|:-------------------------:
