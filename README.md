@@ -2,20 +2,21 @@
 
 
 Celem robota jest poruszanie się po hali, zbieranie przedmiotów i później odkładanie ich w wyznaczonym miejscu. Rozplanowanie zadań przedstawiono na schemacie poniżej. 
-<p align="center"><img src="schemat.png" height = "500" width = "400"></p>
+
 
 Schemat automatu nadrzędnego          | Automat arm_box
 :-------------------------:|:-------------------------:
 ![](docs/schemat.png)  |  ![](docs/arm_box)
 
-s3          |  s4
+Automat camera          | Automat check_base_pose
 :-------------------------:|:-------------------------:
 ![](docs/camera2)  |  ![](docs/check_base_pose)
 
-s5         |  s6
+Automat grab_obj        | Automat move_arm
 :-------------------------:|:-------------------------:
 ![](docs/grab_obj)  |  ![](docs/move_arm.png)
-s5         |  s6
+
+Automat move_base         |  Automat open_gripper
 :-------------------------:|:-------------------------:
 ![](docs/move_base.png)  |  ![](docs/open_gripper)
 
