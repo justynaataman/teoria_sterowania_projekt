@@ -15,7 +15,7 @@ s5         |  s6
 ![](docs/grab_obj.png)  |  ![](docs/move_arm.png)
 s5         |  s6
 :-------------------------:|:-------------------------:
-![](docs/move_base.png)  |  ![](docs/open_gripper.png)
+![](docs/move_base)  |  ![](docs/open_gripper)
 
 
 
