@@ -7,17 +7,11 @@ Celem robota jest poruszanie się po hali, zbieranie przedmiotów i później od
 Schemat automatu nadrzędnego          | Automat arm_box
 :-------------------------:|:-------------------------:
 ![](docs/schemat.png)  |  ![](docs/arm_box)
-
 Automat camera          | Automat check_base_pose
-:-------------------------:|:-------------------------:
 ![](docs/camera2)  |  ![](docs/check_base_pose)
-
 Automat grab_obj        | Automat move_arm
-:-------------------------:|:-------------------------:
 ![](docs/grab_obj)  |  ![](docs/move_arm.png)
-
 Automat move_base         |  Automat open_gripper
-:-------------------------:|:-------------------------:
 ![](docs/move_base.png)  |  ![](docs/open_gripper)
 
 
