@@ -1,33 +1,58 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-visor = nx.DiGraph()
 
-def path(stan1, stan2):
+def create_graph(visor):
+    visor.add_edges_from([('wait', 'cam'), ('wait', 'move_b'), ('move_b', 'cam'),
+                          ('cam', 'grab'), ('cam', 'move_a'), ('move_a', 'cam'),
+                          ('grab', 'check_box_pos'), ('check_box_pos', 'move_b'), ('move_b', 'is_arm'),
+                          ('check_box_pos', 'is_arm'), ('is_arm', 'move_a'), ('move_a', 'is_arm'),
+                          ('is_arm', 'put_o'), ('put_o', 'wait')])
+    pos = {
+        'wait': (1, 10),
+        'cam': (1, 5),
+        'grab': (3, 5),
+        'check_box_pos': (7, 5),
+        'is_arm': (10, 5),
+        'move_b': (5, 8),
+        'move_a': (5, 1),
+        'put_o': (10, 10)
+    }
+    return visor, pos
+
+
+
+def show_path(stan1, stan2):
     for path in nx.all_simple_paths(visor, source=stan1, target=stan2):
         print(path)
 
 
+def update_graph(pos, visor, name= None):
+    plt.clf()
+    if name!= None:
+        #val_map = {'wait': 0.0, name: 1.0, 'put_o': 0.8}
+        val_map = {'wait': 'yellow', name: 'red', 'put_o': 'green'}
+    else:
+        val_map={
+            'wait': 'yellow',
+            'put_o': 'green'
+        }
+    values = [val_map.get(node, 'blue') for node in visor.nodes()]
+    nx.draw_networkx_nodes(visor, pos, cmap=plt.get_cmap('jet'),
+                           node_color=values, node_size=1000)
+    nx.draw_networkx_labels(visor, pos)
+    nx.draw_networkx_edges(visor, pos, edge_color='r', arrows=True)
+    nx.draw_networkx_edges(visor, pos, arrows=False)
+    plt.ion()
+    plt.show()
+    plt.pause(0.1)
+
+if __name__=='__main__':
+    visor = nx.DiGraph()
+    visor, pos = create_graph(visor)
+    lista = list(visor.nodes)
+    for element in lista:
+        update_graph(pos, element)
 
 
 
-visor.add_edges_from([('wait', 'cam'), ('cam', 'grab'), ('grab', 'check_box_pos'),
-                      ('check_box_pos', 'arm_b'), ('check_box_pos', 'move_b'),
-     ('cam', 'move_a'), ('move_b', 'cam'), ('move_b', 'arm_b'), ('arm_b', 'put_o'),
-                      ('wait', 'move_b'), ('move_a', 'cam'), ('arm_a', 'arm_b'),
-                      ('arm_b', 'move_a'), ('put_o', 'wait')])
-
-val_map = {'wait': 0.4,
-           'put_o': 0.6}
-
-values = [val_map.get(node, 0.25) for node in visor.nodes()]
-
-pos = nx.spring_layout(visor)
-nx.draw_networkx_nodes(visor, pos, cmap=plt.get_cmap('jet'),
-                       node_color = values, node_size = 500)
-nx.draw_networkx_labels(visor, pos)
-nx.draw_networkx_edges(visor, pos, edge_color='r', arrows=True)
-nx.draw_networkx_edges(visor, pos,  arrows=False)
-
-path('wait', 'move_a')
-plt.show()
