@@ -62,13 +62,40 @@ def display(data):
 
 
 
+
+
 des_id = 0
 def automata(path, des_id):
    update_graph(visor_pos, visor, "wait")
+   def start_point(robot):
+   
+
+    rot1 = rpy2r([0, 0, 0], unit='deg')
+    tran1 = [0.0, 0.0, 0.0]
+    start = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
+
+
+    rot2 = rpy2r([0, 0, 0], unit='deg')
+    tran2 = [0.1, 0.1, 0.1]
+    stop = pose.SE3(tran2[0], tran2[1], tran2[2], rot2)
+
+    new_path = move_lin(robot, start, stop)
+
+ 
+    return new_path, stop
+
+   """
    rot1 = rpy2r([0, 0, 0], unit='deg')
-   tran1 = [0, 0, 0]
+   tran1 = [0.0, 0, 0]
    start = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
-   path_a = None
+   rot1 = rpy2r([0, 0, 0], unit='deg')
+   tran1 = [0.01, 0.01, 0.01]
+   stop = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
+   path_a = move_lin(robot, start, stop)
+   """
+  
+   
+   #path_a = None
    # create a supervisor
    supervisor = Generator.create_master(master_states, master_transition)
    print(des_path[des_id])
@@ -79,6 +106,7 @@ def automata(path, des_id):
    # run supervisor for exemplary path
    print("Executing path: {}".format(path))
    model = robot.Puma560()
+   path_a, start =start_point(model)
    for event in path:
 
        # launch a transition in our supervisor
@@ -101,7 +129,6 @@ def automata(path, des_id):
            slave_transition = move_base_transitions
            slave_path = paths_move_base
            print("move base")
-           #start, path_a, i = animate_robot(model, start, path_a, i)
            print(path_a)
 
        if val == "grab_obj":
@@ -136,7 +163,7 @@ def automata(path, des_id):
            slave_states = put_obj_states
            slave_path = paths_put_obj
            print('put obj')
-           start, path_a, i = animate_robot(model, start, path_a, i)
+
          
        #create slave automata
        if slave_states is not None:

@@ -6,25 +6,16 @@ from moves import move_lin
 
 def animate_robot(robot, start, path, i):
    
-    r1 = random.randint(-10,10)
-    r1 /= 10 
-    r2 = random.randint(-10,10)
-    r2 /= 10 
-    r3 = random.randint(-10,10)
-    r3 /= 10 
-    t1 = random.randint(-10,10)
-    t1 /= 10 
-    t2 = random.randint(-10,10)
-    t2 /= 10 
-    t3 = random.randint(-10,10)
-    t3 /= 10 
+   
+    if i != 0: 
+        i2 = i/2
+    else: 
+        i2 = i
     rot1 = rpy2r([0, 0, 0], unit='deg')
-    tran1 = [float(t1), float(t2), float(t3)]
-    path2 = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
+    tran1 = [0.1, 0.1, 0.1]
+    path2 = pose.SE3(tran1[0] + i2, tran1[1] + i2, tran1[2] + i2, rot1)
     new_path = move_lin(robot, start, path2)
-    #print(path)
-    #print("######")
-    #print(new_path)
+
     if i == 0:
         path=new_path
     else: 
