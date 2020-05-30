@@ -21,15 +21,11 @@ visor, visor_pos = create_graph(visor)
 def trace(data):
     nodeA = ""
     nodeB = ""
-    flaga = 0
     for sign in data:
         if sign == '.':
-            flaga = 1
+            nodeA = nodeA + sign
         else:
-            if flaga == 0:
-                nodeA = nodeA + sign
-            else:
-                nodeB = nodeB + sign
+            nodeB = nodeB + sign
     print("avaible traces:")
     show_path(nodeA, nodeB, visor)
     print("")
@@ -174,7 +170,7 @@ def automata(path, des_id):
                slave_transition[x]._run(slave)
                print(slave.current_state)
                time.sleep(1.0)
-       time.sleep(2.0)
+       time.sleep(0.5)
        print("")
    plt.clf()
    model= robot.Puma560()
