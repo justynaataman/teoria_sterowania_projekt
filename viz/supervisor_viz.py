@@ -22,7 +22,7 @@ def create_graph(visor):
 
 
 
-def show_path(stan1, stan2):
+def show_path(stan1, stan2, visor):
     for path in nx.all_simple_paths(visor, source=stan1, target=stan2):
         print(path)
 
@@ -31,7 +31,7 @@ def update_graph(pos, visor, name= None):
     plt.clf()
     if name!= None:
         #val_map = {'wait': 0.0, name: 1.0, 'put_o': 0.8}
-        val_map = {'wait': 'yellow', name: 'red', 'put_o': 'green'}
+        val_map = {'wait': 'yellow', 'put_o': 'green',  name: 'red'}
     else:
         val_map={
             'wait': 'yellow',

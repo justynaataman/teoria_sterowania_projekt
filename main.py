@@ -14,23 +14,61 @@ import networkx as nx
 from viz import *
 import matplotlib.pyplot as plt
 
-
-path_a = None
-model = robot.Puma560()
-
-rot1 = rpy2r([0, 0, 0], unit='deg')
-tran1 = [0, 0, 0]
-start = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
-
 #create visualization in networkX
 visor = nx.DiGraph()
 visor, visor_pos = create_graph(visor)
 
+def trace(data):
+    nodeA = ""
+    nodeB = ""
+    flaga = 0
+    for sign in data:
+        if sign == '.':
+            flaga = 1
+        else:
+            if flaga == 0:
+                nodeA = nodeA + sign
+            else:
+                nodeB = nodeB + sign
+    print("avaible traces:")
+    show_path(nodeA, nodeB, visor)
+    print("")
+
+def display(data):
+    if data == 'all':
+        cam_viz()
+        move_b_viz()
+        grab_obj_viz()
+        check_box_pos_viz()
+        arm_box_viz()
+        move_a_viz()
+        put_o_viz()
+    else:
+        # wait, cam, grab, check_box_pos, is_arm, move_b, move_a, put_o
+        if data == 'cam':
+            cam_viz()
+        if data == 'move_b':
+            move_b_viz()
+        if data == 'grab':
+            grab_obj_viz()
+        if data == 'check_box_pos':
+            check_box_pos_viz()
+        if data == 'is_arm':
+            arm_box_viz()
+        if data == 'move_a':
+            move_a_viz()
+        if data == 'put_o':
+            put_o_viz()
+
 
 
 des_id = 0
-for path in paths:
+def automata(path, des_id):
    update_graph(visor_pos, visor, "wait")
+   rot1 = rpy2r([0, 0, 0], unit='deg')
+   tran1 = [0, 0, 0]
+   start = pose.SE3(tran1[0], tran1[1], tran1[2], rot1)
+   path_a = None
    # create a supervisor
    supervisor = Generator.create_master(master_states, master_transition)
    print(des_path[des_id])
@@ -40,6 +78,7 @@ for path in paths:
    i = 0
    # run supervisor for exemplary path
    print("Executing path: {}".format(path))
+   model = robot.Puma560()
    for event in path:
 
        # launch a transition in our supervisor
@@ -50,8 +89,6 @@ for path in paths:
        slave_states = None
        slave_transition = None
        slave_path = None
-       #for ev in events:
-           # add slave
        if val == "camera":
            print("cam")
            update_graph(visor_pos, visor, "cam")
@@ -64,7 +101,7 @@ for path in paths:
            slave_transition = move_base_transitions
            slave_path = paths_move_base
            print("move base")
-           start, path_a, i = animate_robot(model, start, path_a, i)
+           #start, path_a, i = animate_robot(model, start, path_a, i)
            print(path_a)
 
        if val == "grab_obj":
@@ -112,12 +149,32 @@ for path in paths:
                time.sleep(1.0)
        time.sleep(2.0)
        print("")
-   print(path_a)
    plt.clf()
-   time.sleep(10)
-
+   model= robot.Puma560()
    model.animate(stances=path_a, frame_rate=30, unit='deg')
 
-print('Supervisor done!')
+   print('Supervisor done!')
+
+
+
+if __name__=='__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--path", help="num of path to run",
+                        type=int, default=0)
+    parser.add_argument("--display_trace", help="add if you want to display graph for one of slaves. add name of the slave, eg --display=cam.  add all to display all graphs. Avaible nodes: wait, cam, grab, check_box_pos, is_arm, move_b, move_a, put_o",
+                        type=str, default=None)
+    parser.add_argument("--trace", help="print trace between 2 nodes. format: --trace=nodeA.nodeB. Avaible nodes: wait, cam, grab, check_box_pos, is_arm, move_b, move_a, put_o",
+                        type=str, default=None)
+    args = parser.parse_args()
+    if args.path>2:
+        print("add another path: 0, 1, 2")
+    else:
+        if args.display_trace is None:
+            if args.trace != None:
+                trace(args.trace)
+            automata(path=paths[args.path], des_id=args.path)
+        else:
+            display(args.display_trace)
+
 
 
